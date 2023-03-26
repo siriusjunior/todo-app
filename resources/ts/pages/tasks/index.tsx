@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import {useQuery} from "react-query"
 
 type Task = {
     id: number
@@ -11,14 +12,18 @@ type Task = {
 
 const TaskPage: React.VFC = () => {
 
-    const [tasks, setTasks] = useState<Task[]>([])
-    const getTasks = async() => {
-        const { data } = await axios.get<Task[]>('api/tasks')
-        setTasks(data)
-    }
-    useEffect(() => {
-        getTasks()
-    })
+const{ data:tasks, status } = useQuery('tasks',async () => {
+    const { data } = await axios.get<Task[]>('api/tasks')
+    return data
+})
+if(status==='loading'){
+    return <div className="loader"/>
+}else if (status==='error'){
+    return <div className="align-center">データの読み込みに失敗しました。</div>
+}else if (!tasks || tasks.length <= 0){
+    return <div className="align-center">登録されたToDoはありません。</div>
+}
+
     return(
         <>
             <form className="input-form">
