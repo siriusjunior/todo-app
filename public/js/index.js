@@ -2139,7 +2139,7 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.getTasks = void 0;
+exports.updateDoneTask = exports.getTasks = void 0;
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 var getTasks = function getTasks() {
   return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -2161,6 +2161,30 @@ var getTasks = function getTasks() {
   }));
 };
 exports.getTasks = getTasks;
+var updateDoneTask = function updateDoneTask(_ref) {
+  var id = _ref.id,
+    is_done = _ref.is_done;
+  return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var _yield$axios_1$defaul2, data;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return axios_1["default"].patch("api/tasks/update-done/".concat(id), {
+            is_done: !is_done
+          });
+        case 2:
+          _yield$axios_1$defaul2 = _context2.sent;
+          data = _yield$axios_1$defaul2.data;
+          return _context2.abrupt("return", data);
+        case 5:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+};
+exports.updateDoneTask = updateDoneTask;
 
 /***/ }),
 
@@ -2297,6 +2321,46 @@ exports["default"] = TaskInput;
 
 /***/ }),
 
+/***/ "./resources/ts/pages/tasks/components/TaskItem.tsx":
+/*!**********************************************************!*\
+  !*** ./resources/ts/pages/tasks/components/TaskItem.tsx ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var TaskQuery_1 = __webpack_require__(/*! ../../../queries/TaskQuery */ "./resources/ts/queries/TaskQuery.ts");
+var TaskItem = function TaskItem(_ref) {
+  var task = _ref.task;
+  var updateDoneTask = (0, TaskQuery_1.useUpdateDoneTask)();
+  return react_1["default"].createElement("li", {
+    className: task.is_done ? 'done' : ''
+  }, react_1["default"].createElement("label", {
+    className: "checkbox-label"
+  }, react_1["default"].createElement("input", {
+    type: "checkbox",
+    className: "checkbox-input",
+    onClick: function onClick() {
+      return updateDoneTask.mutate(task);
+    }
+  })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, task.title)), react_1["default"].createElement("button", {
+    className: "btn is-delete"
+  }, "\u524A\u9664"));
+};
+exports["default"] = TaskItem;
+
+/***/ }),
+
 /***/ "./resources/ts/pages/tasks/components/TaskList.tsx":
 /*!**********************************************************!*\
   !*** ./resources/ts/pages/tasks/components/TaskList.tsx ***!
@@ -2316,6 +2380,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var TaskQuery_1 = __webpack_require__(/*! ../../../queries/TaskQuery */ "./resources/ts/queries/TaskQuery.ts");
+var TaskItem_1 = __importDefault(__webpack_require__(/*! ./TaskItem */ "./resources/ts/pages/tasks/components/TaskItem.tsx"));
 var TaskList = function TaskList() {
   var _ref = (0, TaskQuery_1.useTasks)(),
     tasks = _ref.data,
@@ -2338,16 +2403,10 @@ var TaskList = function TaskList() {
   }, react_1["default"].createElement("ul", {
     className: "task-list"
   }, tasks.map(function (task) {
-    return react_1["default"].createElement("li", {
-      key: task.id
-    }, react_1["default"].createElement("label", {
-      className: "checkbox-label"
-    }, react_1["default"].createElement("input", {
-      type: "checkbox",
-      className: "checkbox-input"
-    })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, task.title)), react_1["default"].createElement("button", {
-      className: "btn is-delete"
-    }, "\u524A\u9664"));
+    return react_1["default"].createElement(TaskItem_1["default"], {
+      key: task.id,
+      task: task
+    });
   }), react_1["default"].createElement("li", null, react_1["default"].createElement("label", {
     className: "checkbox-label"
   }, react_1["default"].createElement("input", {
@@ -2482,7 +2541,7 @@ var __importStar = this && this.__importStar || function (mod) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.useTasks = void 0;
+exports.useUpdateDoneTask = exports.useTasks = void 0;
 var api = __importStar(__webpack_require__(/*! ../api/TaskAPI */ "./resources/ts/api/TaskAPI.ts"));
 var react_query_1 = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
 var useTasks = function useTasks() {
@@ -2491,6 +2550,15 @@ var useTasks = function useTasks() {
   });
 };
 exports.useTasks = useTasks;
+var useUpdateDoneTask = function useUpdateDoneTask() {
+  var queryClient = (0, react_query_1.useQueryClient)();
+  return (0, react_query_1.useMutation)(api.updateDoneTask, {
+    onSuccess: function onSuccess() {
+      queryClient.invalidateQueries('tasks');
+    }
+  });
+};
+exports.useUpdateDoneTask = useUpdateDoneTask;
 
 /***/ }),
 
