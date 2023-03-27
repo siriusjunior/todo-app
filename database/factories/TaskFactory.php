@@ -16,9 +16,11 @@ class TaskFactory extends Factory
      */
     public function definition()
     {
+        $userId = $this->faker->numberBetween(1,4);
         return [
-            'title' => $this->faker->realText(rand(15,40)),
+            'title' => $userId . ':' . $this->faker->realText(rand(15,40)),
             'is_done' => $this->faker->boolean(10),
+            'user_id' => $userId,
             'created_at' => now(),
             'updated_at' => now(),
         ];

@@ -2885,48 +2885,7 @@ var TaskList = function TaskList() {
       key: task.id,
       task: task
     });
-  }), react_1["default"].createElement("li", null, react_1["default"].createElement("label", {
-    className: "checkbox-label"
-  }, react_1["default"].createElement("input", {
-    type: "checkbox",
-    className: "checkbox-input"
-  })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, "\u65B0\u3057\u3044TODO")), react_1["default"].createElement("button", {
-    className: "btn is-delete"
-  }, "\u524A\u9664")), react_1["default"].createElement("li", null, react_1["default"].createElement("label", {
-    className: "checkbox-label"
-  }, react_1["default"].createElement("input", {
-    type: "checkbox",
-    className: "checkbox-input"
-  })), react_1["default"].createElement("form", null, react_1["default"].createElement("input", {
-    type: "text",
-    className: "input",
-    defaultValue: "\u7DE8\u96C6\u4E2D\u306ETODO"
-  })), react_1["default"].createElement("button", {
-    className: "btn"
-  }, "\u66F4\u65B0")), react_1["default"].createElement("li", {
-    className: "done"
-  }, react_1["default"].createElement("label", {
-    className: "checkbox-label"
-  }, react_1["default"].createElement("input", {
-    type: "checkbox",
-    className: "checkbox-input"
-  })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, "\u5B9F\u884C\u3057\u305FTODO")), react_1["default"].createElement("button", {
-    className: "btn is-delete"
-  }, "\u524A\u9664")), react_1["default"].createElement("li", null, react_1["default"].createElement("label", {
-    className: "checkbox-label"
-  }, react_1["default"].createElement("input", {
-    type: "checkbox",
-    className: "checkbox-input"
-  })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, "\u30B4\u30DF\u6368\u3066")), react_1["default"].createElement("button", {
-    className: "btn is-delete"
-  }, "\u524A\u9664")), react_1["default"].createElement("li", null, react_1["default"].createElement("label", {
-    className: "checkbox-label"
-  }, react_1["default"].createElement("input", {
-    type: "checkbox",
-    className: "checkbox-input"
-  })), react_1["default"].createElement("div", null, react_1["default"].createElement("span", null, "\u6383\u9664")), react_1["default"].createElement("button", {
-    className: "btn is-delete"
-  }, "\u524A\u9664")))));
+  }))));
 };
 exports["default"] = TaskList;
 
@@ -3142,7 +3101,7 @@ var useCreateTask = function useCreateTask() {
           });
         });
       } else {
-        react_toastify_1.toast.success('更新に失敗しました。');
+        react_toastify_1.toast.error('更新に失敗しました。');
       }
     }
   });
@@ -3164,7 +3123,7 @@ var useUpdateTask = function useUpdateTask() {
           });
         });
       } else {
-        react_toastify_1.toast.success('更新に失敗しました。');
+        react_toastify_1.toast.error('更新に失敗しました。');
       }
     }
   });
@@ -3178,7 +3137,7 @@ var useDeleteTask = function useDeleteTask() {
       react_toastify_1.toast.success('削除に成功しました。');
     },
     onError: function onError() {
-      react_toastify_1.toast.success('更新に失敗しました。');
+      react_toastify_1.toast.error('更新に失敗しました。');
     }
   });
 };

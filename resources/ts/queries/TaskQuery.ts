@@ -37,7 +37,7 @@ const useCreateTask = () => {
                     }
                 )
             }else{
-                toast.success('更新に失敗しました。')
+                toast.error('更新に失敗しました。')
             }
         }
     })
@@ -61,7 +61,7 @@ const useUpdateTask = () => {
                     }
                 )
             }else{
-                toast.success('更新に失敗しました。')
+                toast.error('更新に失敗しました。')
             }
         }
     })
@@ -76,7 +76,7 @@ const useDeleteTask = () => {
             toast.success('削除に成功しました。')
         },
         onError: () => {
-            toast.success('更新に失敗しました。')
+            toast.error('更新に失敗しました。')
         }
     })
 }

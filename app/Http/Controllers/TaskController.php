@@ -5,16 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:checkUser,task')->only([
+            'updateDone',
+            'update',
+            'destroy',
+        ]);
+    }
     public function index()
     {
-        return Task::orderByDesc('id')->get();
+        return Task::where('user_id', Auth::id())->orderByDesc('id')->get();
     }
 
     public function store(TaskRequest $request)
     {
+        $request->merge([
+            'user_id' => Auth::id()
+        ]);
         $task = Task::create($request->all());
 
         return $task
