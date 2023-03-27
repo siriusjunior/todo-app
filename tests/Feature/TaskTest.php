@@ -5,10 +5,19 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Task;
+use App\Models\User;
 
 class TaskTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setup();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+    }
+
     /**
      *
      * @test
