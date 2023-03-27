@@ -19,7 +19,6 @@ const useUpdateDoneTask = () => {
         }
     })
 }
-
 const useCreateTask = () => {
     const queryClient = useQueryClient()
 
